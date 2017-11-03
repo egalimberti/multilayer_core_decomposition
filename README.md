@@ -20,11 +20,6 @@ Run the following command from the folder 'multilayer_core_decomposition/':
     * homo
     * sacchcere
     * dblp
-    * obamainisrael
-    * amazon
-    * friendfeedtwitter
-    * higgs
-    * friendfeed
     
   * m           method
     * n         naive method (beginning of Section 3)
