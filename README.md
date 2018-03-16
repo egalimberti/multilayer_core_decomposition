@@ -57,4 +57,4 @@ The same result obtained by option '--dis' can be achieved by executing a multil
 #### Example:
   'python filter_distinct_cores.py homo'
   
- Mail to [edoardo.galimberti@isi.it](edoardo.galimberti@isi.it) for the datasets missing in this repository.
+ Mail to [edoardo.galimberti@isi.it](mailto:edoardo.galimberti@isi.it) for the datasets missing in this repository.
