@@ -1,4 +1,4 @@
-# Core Decomposition and Densest Subgraph in Multilayer Networks
+# [Core Decomposition and Densest Subgraph in Multilayer Networks](http://edoardogalimberti.altervista.org/documents/papers/Core_Decomposition_and_Densest_Subgraph_in_Multilayer_Networks.pdf)
 
 ### Folders
 * datasets: subset of datasets listed in Table 1 and example network of Figure 1
@@ -56,3 +56,5 @@ The same result obtained by option '--dis' can be achieved by executing a multil
   
 #### Example:
   'python filter_distinct_cores.py homo'
+  
+ Mail to [edoardo.galimberti@isi.it](edoardo.galimberti@isi.it) for the datasets missing in this repository.
