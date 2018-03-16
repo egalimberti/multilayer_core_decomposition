@@ -1,16 +1,16 @@
 # [Core Decomposition and Densest Subgraph in Multilayer Networks](http://edoardogalimberti.altervista.org/documents/papers/Core_Decomposition_and_Densest_Subgraph_in_Multilayer_Networks.pdf)
 
-### Folders
+## Folders
 * datasets: subset of datasets listed in Table 1 and example network of Figure 1
 * multilayer_core_decomposition: code
 * output: destination of code's output
 
-### Code
+## Code
 To use the code, first run 'python setup.py build_ext --inplace' from the folder 'multilayer_core_decomposition/'.
 This command builds the .c files created by Cython.
 Alternatively, without running the mentioned command, it is possible to directly execute the Python code.
 
-### Execution
+## Execution
 Run the following command from the folder 'multilayer_core_decomposition/':
   'python multilayer_core_decomposition.py [-h] [-b B] [--ver] [--dis] d m'
 
@@ -44,7 +44,7 @@ Run the following command from the folder 'multilayer_core_decomposition/':
 #### Example:
   'python multilayer_core_decomposition.py homo h --ver'
 
-### Script
+## Script
 The same result obtained by option '--dis' can be achieved by executing a multilayer core decomposition method with option '--ver' and then running the following command from the folder 'multilayer_core_decomposition/scripts/':
   'python filter_distinct_cores.py [-h] d'
 
@@ -57,4 +57,5 @@ The same result obtained by option '--dis' can be achieved by executing a multil
 #### Example:
   'python filter_distinct_cores.py homo'
   
- Mail to [edoardo.galimberti@isi.it](mailto:edoardo.galimberti@isi.it) for the datasets missing in this repository.
+## Datasets
+Mail to [edoardo.galimberti@isi.it](mailto:edoardo.galimberti@isi.it) for the datasets missing in this repository.
