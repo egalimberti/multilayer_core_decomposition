@@ -42,7 +42,7 @@ def hybrid(multilayer_graph, print_file, distinct_flag):
 
     # compute the core decomposition layer by layer
     for layer in multilayer_graph.layers_iterator:
-        cores.update(pure_core_decomposition(multilayer_graph, start_vector, layer, print_file, distinct_flag))
+        cores.update(pure_core_decomposition(multilayer_graph, start_vector, layer, print_file=print_file, distinct_flag=distinct_flag)[0])
     number_of_computed_cores += len(cores) + multilayer_graph.number_of_layers
 
     # while vectors_queue is not empty
@@ -59,9 +59,7 @@ def hybrid(multilayer_graph, print_file, distinct_flag):
             # if the intersection of its ancestor cores is not empty
             if len(ancestors_intersection) > 0:
                 # compute the core from it
-                k_core_result = core(multilayer_graph, vector, ancestors_intersection, algorithm='h')
-                k_core = k_core_result[0]
-                minimum_degrees_vector = k_core_result[1]
+                k_core, minimum_degrees_vector = core(multilayer_graph, vector, ancestors_intersection, algorithm='h')
                 number_of_computed_cores += 1
 
                 # if the core is not empty

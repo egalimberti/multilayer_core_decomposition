@@ -1,13 +1,16 @@
 from collections import defaultdict
 from array import array
 
-from core import core
-from objective_function import objective_function
-from ..subroutines.commons import *
+from core_decomposition.subroutines.core import core
+from core_decomposition.subroutines.commons import *
+from subroutines.objective_function import objective_function
 from utilities.time_measure import ExecutionTime
 
 
-def densest_subgraph(multilayer_graph, beta):
+def breadth_first_community_search(multilayer_graph, query_nodes, beta):
+    # measures
+    number_of_computed_cores = 0
+
     # start of the algorithm
     execution_time = ExecutionTime()
 
@@ -17,13 +20,11 @@ def densest_subgraph(multilayer_graph, beta):
     # dict of cores
     cores = {}
 
-    # solution initialized with the objective function of the whole input graph
-    densest_subgraph = array('i', multilayer_graph.get_nodes())
-    current_objective_function = objective_function(multilayer_graph.number_of_nodes, multilayer_graph.get_number_of_edges_layer_by_layer(), beta)
-    maximum_density = current_objective_function[0]
-    maximum_layers = current_objective_function[1]
-    maximum_average_degrees = current_objective_function[2]
-    densest_subgraph_vector = start_vector
+    # solution initialized with the whole input graph
+    community_search_density = 0.0
+    community_search_nodes = array('i', multilayer_graph.get_nodes())
+    community_search_layers = set(multilayer_graph.layers_iterator)
+    community_search_vector = start_vector
 
     # initialize the queue of vectors with the descendants of start_vector and the structure that for each vector saves its ancestor vectors
     vectors_queue = deque()
@@ -47,30 +48,29 @@ def densest_subgraph(multilayer_graph, beta):
         if number_of_non_zero_indexes == number_of_ancestors:
             ancestors_intersection = build_ancestors_intersection(ancestors[vector], cores, descendants_count, False, multilayer_graph=multilayer_graph)
 
-            # if the intersection of its ancestor cores is not empty
-            if len(ancestors_intersection) > 0:
+            # if the intersection of its ancestor contains the query nodes
+            if query_nodes <= ancestors_intersection:
                 # compute the core from it
-                core_result = core(multilayer_graph, beta, vector, ancestors_intersection)
-                k_core = core_result[0]
+                k_core = core(multilayer_graph, vector, ancestors_intersection)
+                number_of_computed_cores += 1
             # otherwise
             else:
                 # delete its entry from ancestors and continue
                 del ancestors[vector]
                 continue
 
-            # if the core is not empty
-            if len(k_core) > 0:
-                # add the core to the dict of cores and increment the number of cores
+            # if the core contains the query nodes
+            if query_nodes <= set(k_core):
+                # add the core to the dict of cores
                 cores[vector] = k_core
 
-                # update the densest subgraph if needed
-                current_objective_function = core_result[1]
-                if current_objective_function[0] >= maximum_density:
-                    densest_subgraph = k_core
-                    maximum_density = current_objective_function[0]
-                    maximum_layers = current_objective_function[1]
-                    maximum_average_degrees = current_objective_function[2]
-                    densest_subgraph_vector = vector
+                # update the community search solution if needed
+                core_density, core_layers = objective_function(vector, beta)
+                if core_density >= community_search_density:
+                    community_search_density = core_density
+                    community_search_nodes = k_core
+                    community_search_layers = core_layers
+                    community_search_vector = vector
 
                 # compute its descendant vectors
                 for index in multilayer_graph.layers_iterator:
@@ -100,5 +100,6 @@ def densest_subgraph(multilayer_graph, beta):
     # end of the algorithm
     execution_time.end_algorithm()
 
-    # print the densest subgraph
-    print_densest_subgraph(beta, maximum_density, densest_subgraph, maximum_layers, densest_subgraph_vector, maximum_average_degrees)
+    # print algorithm's results
+    print_end_algorithm_community_search(execution_time.execution_time_seconds, number_of_computed_cores)
+    print_community_search(query_nodes, beta, community_search_density, community_search_nodes, community_search_layers, community_search_vector)

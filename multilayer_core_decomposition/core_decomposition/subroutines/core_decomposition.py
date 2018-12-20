@@ -1,9 +1,10 @@
 from array import array
 
 
-def core_decomposition(multilayer_graph, vector, layer, nodes):
+def core_decomposition(multilayer_graph, vector, layer, nodes, query_nodes=None):
     # solution set
     cores = {}
+    cores_order = []
 
     # populate current_k_core with the set of specified nodes
     current_k_core = set(nodes)
@@ -20,9 +21,9 @@ def core_decomposition(multilayer_graph, vector, layer, nodes):
     # sets of nodes divided by degree in the specified layer
     delta_sets = [set() for _ in xrange(max([node_degrees[layer] for node_degrees in delta.itervalues()]) + 1)]
     # for each node
-    for node, degrees in delta.iteritems():
+    for node, node_degrees in delta.iteritems():
         # put the node in the set corresponding to its degree in the specified layer
-        delta_sets[degrees[layer]].add(node)
+        delta_sets[node_degrees[layer]].add(node)
 
     # for each set in delta_sets
     for index, delta_set in enumerate(delta_sets):
@@ -61,12 +62,16 @@ def core_decomposition(multilayer_graph, vector, layer, nodes):
                                 # update its delta
                                 delta[neighbor][layer] = index
 
-        # if the core exists
-        if len(current_k_core) > 0:
+        # if the core contains the query nodes or exists
+        if (query_nodes is None and len(current_k_core) > 0) or (query_nodes is not None and query_nodes <= current_k_core):
             # build the core index vector of the found core
             current_vector_list[layer] = index + 1
             current_vector = tuple(current_vector_list)
             # add it to the solution set
             cores[current_vector] = array('i', current_k_core)
+            cores_order.append(current_vector)
+        elif query_nodes is not None:
+            # otherwise conclude the method
+            break
 
-    return cores
+    return cores, cores_order

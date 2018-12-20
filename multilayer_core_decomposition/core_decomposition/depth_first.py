@@ -52,7 +52,7 @@ def depth_first(multilayer_graph, print_file, distinct_flag):
             for base_layer in base_layers:
                 # compute its core decomposition and store it in temp_base_cores
                 if vector[base_layer] == 0:
-                    new_cores = core_decomposition(multilayer_graph, vector, base_layer, nodes)
+                    new_cores, _ = core_decomposition(multilayer_graph, vector, base_layer, nodes)
                     temp_base_cores.update(new_cores)
                     number_of_computed_cores += len(new_cores) + 1
 
@@ -70,7 +70,7 @@ def depth_first(multilayer_graph, print_file, distinct_flag):
             for layer in layers - base_layers:
                 # compute its core decomposition
                 if vector[layer] == 0:
-                    new_cores = core_decomposition(multilayer_graph, vector, layer, nodes)
+                    new_cores, _ = core_decomposition(multilayer_graph, vector, layer, nodes)
                     number_of_computed_cores += len(new_cores) + 1
 
                     new_cores_set = set(new_cores)

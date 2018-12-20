@@ -12,3 +12,4 @@ def memory_usage_resource():
 
     # return the memory usage
     return getrusage(RUSAGE_SELF).ru_maxrss / rusage_denominator
+

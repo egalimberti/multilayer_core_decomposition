@@ -100,8 +100,6 @@ def post_processing(cores, distinct_flag, print_file):
 
 
 def filter_distinct_cores(cores):
-    print 'Filtering distinct cores...'
-
     # vectors ordered by their level
     ordered_vectors = sorted(cores.iterkeys(), key=sum)
 
@@ -118,4 +116,20 @@ def filter_distinct_cores(cores):
                 del cores[vector]
                 break
 
-    print 'Number of distinct cores: ' + str(len(cores))
+
+def filter_inner_most_cores(cores):
+    # vectors ordered by their level
+    ordered_vectors = sorted(cores.iterkeys(), key=sum)
+
+    # for each vector in the ordered list
+    for vector in ordered_vectors:
+        # build the list of its descendant vectors
+        descendant_vectors = [build_descendant_vector(vector, index) for index in xrange(len(vector))]
+
+        # for each descendant vector
+        for descendant_vector in descendant_vectors:
+            # if the descendant vector is in the cores set
+            if descendant_vector in cores:
+                # delete the core and break
+                del cores[vector]
+                break

@@ -3,9 +3,10 @@ from array import array
 from utilities.print_console import *
 
 
-def pure_core_decomposition(multilayer_graph, vector, layer, print_file, distinct_flag):
+def pure_core_decomposition(multilayer_graph, vector, layer, print_file=None, distinct_flag=False, query_nodes=None):
     # solution set
     cores = {}
+    cores_order = []
 
     # populate current_k_core with the set of all nodes of the input multilayer_graph
     current_k_core = set(multilayer_graph.nodes_iterator)
@@ -45,14 +46,18 @@ def pure_core_decomposition(multilayer_graph, vector, layer, print_file, distinc
                     # update its delta
                     delta[neighbor] -= 1
 
-        # if the core exists
-        if len(current_k_core) > 0:
+        # if the core contains the query nodes or exists
+        if (query_nodes is None and len(current_k_core) > 0) or (query_nodes is not None and query_nodes <= current_k_core):
             # build the core index vector of the found core
             current_vector_list[layer] = index + 1
             current_vector = tuple(current_vector_list)
             # add it to the solution set
             cores[current_vector] = array('i', current_k_core)
+            cores_order.append(current_vector)
             if print_file is not None and not distinct_flag:
                 print_file.print_core(current_vector, current_k_core)
+        elif query_nodes is not None:
+            # otherwise conclude the method
+            break
 
-    return cores
+    return cores, cores_order

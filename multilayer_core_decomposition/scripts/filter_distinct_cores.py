@@ -8,6 +8,8 @@ import sys
 sys.path.append('..')
 
 from core_decomposition.subroutines.commons import filter_distinct_cores
+from utilities.time_measure import ExecutionTime
+from utilities.print_console import print_end_algorithm, print_dataset_name
 
 
 if __name__ == '__main__':
@@ -15,19 +17,26 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Filter Distinct Cores')
 
     # arguments
-    parser.add_argument('d', help='dataset')
+    parser.add_argument('cd', help='core decomposition file')
 
     # read the arguments
     args = parser.parse_args()
 
     # create the new file for distinct cores only
-    distinct_cores_file = open(dirname(dirname(getcwd())) + '/output/' + args.d + '_core_decomposition_distinct.txt', 'w')
+    distinct_cores_file = open(dirname(dirname(getcwd())) + '/output/' + args.cd + '_distinct.txt', 'w')
+
+    # print the name of the input graph
+    print_dataset_name(args.cd.split('_')[0])
+    print '---------- Distinct Cores ---------'
+
+    # start of the algorithm
+    execution_time = ExecutionTime()
 
     # dict of cores
     cores = {}
 
     # open the file
-    with open(dirname(dirname(getcwd())) + '/output/' + args.d + '_core_decomposition.txt') as cores_file:
+    with open(dirname(dirname(getcwd())) + '/output/' + args.cd + '.txt') as cores_file:
         # for each line
         for line in cores_file:
             # remove the \n from the line
@@ -45,8 +54,13 @@ if __name__ == '__main__':
     filter_distinct_cores(cores)
 
     # print cores to file
-    print 'Printing cores...'
     for vector, nodes in cores.iteritems():
         sorted_nodes = list(nodes)
         sorted_nodes.sort()
         distinct_cores_file.write(str(vector) + '\t' + str(len(nodes)) + '\t' + str(sorted_nodes).replace('[', '').replace(']','') + '\n')
+
+    # end of the algorithm
+    execution_time.end_algorithm()
+
+    # print algorithm's results
+    print_end_algorithm(execution_time.execution_time_seconds, len(cores), None)

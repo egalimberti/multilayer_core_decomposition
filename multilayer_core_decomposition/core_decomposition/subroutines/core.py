@@ -18,12 +18,9 @@ def core(multilayer_graph, vector, ancestors_intersection, algorithm=None):
     for node in ancestors_intersection:
         # compute the degree in each layer considering only the set of active nodes
         delta[node] = [len([neighbor for neighbor in multilayer_graph.adjacency_list[node][layer] if neighbor in active_nodes]) for layer in multilayer_graph.layers_iterator]
-        in_core = True
 
-        # for each layer
-        for layer in multilayer_graph.layers_iterator:
-            # check if the degree condition over the layer is satisfied
-            in_core &= delta[node][layer] >= vector[layer]
+        # check if the degree conditions over the layers are satisfied
+        in_core = all(delta[node][layer] >= vector[layer] for layer in multilayer_graph.layers_iterator)
 
         # if the node is potentially in the core
         if in_core:
