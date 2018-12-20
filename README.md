@@ -52,7 +52,7 @@ Run the following command from the folder 'multilayer\_core\_decomposition/':
   * -ms         &nbsp;&nbsp;&nbsp;&nbsp;min\_size  
     required for Crochet+ and Corollary 5
 
-  * -cd         &nbsp;&nbsp;&nbsp;&nbsp;core decomposition file (in folder 'multilayer_core_decomposition/output/') 
+  * -cd         &nbsp;&nbsp;&nbsp;&nbsp;core decomposition file (in folder 'multilayer_core_decomposition/output/')  
     required for Corollary 5
 
   * -q          &nbsp;&nbsp;&nbsp;&nbsp;query vertices  
