@@ -34,8 +34,6 @@ Run the following command from the folder 'multilayer\_core\_decomposition/':
     * cs_dfs    &nbsp;&nbsp;&nbsp;&nbsp;DFS-ML-cores for Community Search
     * cs_h      &nbsp;&nbsp;&nbsp;&nbsp;HYBRID-ML-cores for Community Search
     * cs_all    &nbsp;&nbsp;&nbsp;&nbsp;all methods for Community Search
-
-    
     * info      &nbsp;&nbsp;&nbsp;&nbsp;dataset info
 
 #### Optional arguments:
