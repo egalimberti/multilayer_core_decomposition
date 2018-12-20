@@ -52,7 +52,7 @@ Run the following command from the folder 'multilayer\_core\_decomposition/':
   * -ms         &nbsp;&nbsp;&nbsp;&nbsp;min\_size  
     required for Crochet+ and Corollary 5
 
-  * -cd         &nbsp;&nbsp;&nbsp;&nbsp;core decomposition file  
+  * -cd         &nbsp;&nbsp;&nbsp;&nbsp;core decomposition file (in folder 'multilayer_core_decomposition/output/') 
     required for Corollary 5
 
   * -q          &nbsp;&nbsp;&nbsp;&nbsp;query vertices  
@@ -81,7 +81,7 @@ The same result obtained by option '--dis' can be achieved by executing a multil
 'python filter\_distinct\_cores.py [-h] cd'
 
 #### Positional arguments:
-  * cd          &nbsp;&nbsp;&nbsp;&nbsp;core decomposition file
+  * cd          &nbsp;&nbsp;&nbsp;&nbsp;core decomposition file (in folder 'multilayer_core_decomposition/output/')
 
 #### Optional arguments:
   * -h, --help  
@@ -95,7 +95,7 @@ The same output of IM-ML-cores can be obtained by executing a multilayer core de
 'python filter\_inner\_most\_cores.py [-h] cd'
 
 #### Positional arguments:
-  * cd          &nbsp;&nbsp;&nbsp;&nbsp;core decomposition file
+  * cd          &nbsp;&nbsp;&nbsp;&nbsp;core decomposition file (in folder 'multilayer_core_decomposition/output/')
 
 #### Optional arguments:
   * -h, --help  
